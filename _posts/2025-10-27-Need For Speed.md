@@ -1,8 +1,8 @@
 ---
 title: Need For Speed
 date: 2025-10-27 16:30:00 +0700
-categories: [Reverse Engineering, PicoCTF 2019]
-tags: [re]
+categories: [Reverse Engineering, PicoCTF 2019, Hard]
+tags: [re, pico, hard]
 author: khoa
 description: The name of the game is speed. Are you quick enough to solve this problem and keep it above 50 mph? need-for-speed.
 toc: true
@@ -54,6 +54,7 @@ Và mình vô tình gọi print_flag() khi stop, thế là flag lòi ra =)))
 
 ## Lời kết
 Chúc các bạn đánh CTF vui vẻ!!!
+
 
 
 
