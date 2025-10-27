@@ -8,7 +8,7 @@ description: The name of the game is speed. Are you quick enough to solve this p
 toc: true
 comments: true
 ---
-## Cách mình làm
+## **Cách mình làm**
 
 ### Soi source code
 Đầu tiên mình sẽ thử mở file trong **Binary Ninja** để xem nó có gì hot
@@ -32,7 +32,7 @@ _WOW_
 
 Flag: **PICOCTF{Good job keeping bus #190ca38b speeding along!}**
 
-## Kết luận
+## **Kết luận**
 Sau khi tham khảo một vài Writeup khác thì mình có kết luận như sau:
 
 ### Bản chất
@@ -54,6 +54,7 @@ Và mình vô tình gọi print_flag() khi stop, thế là flag lòi ra =)))
 
 ## Lời kết
 Chúc các bạn đánh CTF vui vẻ!!!
+
 
 
 
