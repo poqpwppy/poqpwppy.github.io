@@ -5,7 +5,6 @@ categories: [Reverse Engineering, PicoCTF 2019]
 tags: [re]     # TAG names should always be lowercase
 author: 0
 description: The name of the game is speed. Are you quick enough to solve this problem and keep it above 50 mph? need-for-speed.
-toc: true
 comments: true
 ---
 # Cách mình làm
@@ -50,4 +49,5 @@ Debugger chèn INT3 và thay đổi timing/control-flow, khiến vòng lặp del
 Và mình vô tình gọi print_flag() khi stop, thế là flag lòi ra =)))
 
 Chúc các bạn đánh CTF vui vẻ!!!
+
 
