@@ -23,7 +23,7 @@ _Robots.txt_
 Vậy là mình biết nó có phần /uploads/
 
 ### Nghịch
-Kỹ thuật mình sẽ sử dụng là ImageTragick!, thêm magic byte của file png vào file .php rồi upload lên cho nó thực thi lệnh (RCE
+Kỹ thuật mình sẽ sử dụng là ImageTragick!, thêm magic byte của file png vào file .php rồi upload lên cho nó thực thi lệnh (RCE)
 
 #### Shell.php
 Đầu tiên các bạn cần chuẩn bị 1 file shell.php với nội dung như sau:
@@ -97,4 +97,5 @@ Hệ thống chỉ quan tâm đến "cái mác" (magic byte) mà bỏ qua hoàn 
 Nói chung là cũng tại thằng dev mà thôi =)))
 
 ## **Lời kết**
+
 Chúc các bạn đánh CTF vui vẻ!!!
