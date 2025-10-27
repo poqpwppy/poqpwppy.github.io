@@ -86,7 +86,9 @@ FLAG: **picoCTF{c3rt!fi3d_Xp3rt_tr1ckst3r_ab0ece03}**
 
 ### Cách làm
 B1: Tạo file png giả, có chứa nội dung của file php để thực thi shell
+
 B2: Upload lên web
+
 B3: Phá!!!
 
 ### Tại sao Magic Bytes có thể bypass được và cho phép RCE???
@@ -99,3 +101,4 @@ Nói chung là cũng tại thằng dev mà thôi =)))
 ## **Lời kết**
 
 Chúc các bạn đánh CTF vui vẻ!!!
+
