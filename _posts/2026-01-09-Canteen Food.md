@@ -1,6 +1,6 @@
 ---
 title: Canteen Food
-date: 2026-1-9 12:00:00 +0700
+date: 2026-01-09 12:00:00 +0700
 categories: [Web Exploitation, SQL Injection, PHP Deserialization]
 tags: [web, sql, php]
 author: khoa
@@ -370,3 +370,4 @@ Magic method cũng là con dao 2 lưỡi (```__wakeup()```, ```__destruct()```),
 
 ### Lời kết
 Thôi thì bài writeup của mình cũng chỉ đến đây thôi =))) Chúc các bạn 1 ngày vui vẻ, mình ngủ đây.
+
