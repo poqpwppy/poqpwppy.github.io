@@ -135,7 +135,7 @@ echo -e "fastcgi_param DB_NAME $DB_NAME;\nfastcgi_param DB_USER $DB_USER;\nfastc
 ```
 File trên dùng để bật và khởi tạo database, và kết nối giữa Web và DB để mà nguồn có thể chạy được.
 
-ở dòng 31 của đoạn code trên, mình có thấy 1 chuỗi text khá kì lạ:
+Ở dòng 31 của đoạn code trên, mình có thấy 1 chuỗi text khá kì lạ:
 ```text
 YToyOntpOjA7czo1OiJQaXp6YSI7aToxO2Q6MC45OTt9
 ```
@@ -336,6 +336,7 @@ Rồi mình xây dựng 1 payload SQL sử dụng ```UNION SELECT```:
 ##### Giải thích payload
 
 **Chuỗi PHP Serialized**
+
 ```a:3```: để khai báo 1 mảng vì source code truy cập dữ liệu theo dạng mảng (ở file ```CanteenModel.php```).
 
 ```i:0;s:7:"SKIBIDI";```: Phần tử index 0, giá trị là chuỗi "SKIBIDI".
@@ -385,6 +386,7 @@ Magic method cũng là con dao 2 lưỡi (```__wakeup()```, ```__destruct()```),
 
 ### Lời kết
 Thôi thì bài writeup của mình cũng chỉ đến đây thôi =))) Chúc các bạn 1 ngày vui vẻ, mình ngủ đây.
+
 
 
 
