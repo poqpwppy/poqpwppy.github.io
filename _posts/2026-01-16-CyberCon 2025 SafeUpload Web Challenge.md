@@ -40,12 +40,7 @@ thì đã bị server chặn, mình thử up một file php sử dụng kỹ thu
 
 Và mình cũng đã thử 1 số kỹ thuật bypass khác như nối chuỗi, v.v nhưng vẫn không thành công, nên mình chuyển sang phân tích source code.
 #### Phân tích Source Code
-Source code bao gồm 3 folder:
-
-| public | rules | test |
-| :--- | :--- | :--- |
-| index.php | i_dont_like_webshell.yar | logo.png |
-| upload.php | | |
+Source code bao gồm 3 folder ```public```, ```rules```, ```test``` và 3 file chính là ```index.php```, ```upload.php```, ```i_dont_like_webshell.yar```.
 
 File ```index.php``` xử lí phần UI UX chính của web nên mình sẽ bỏ qua, và đi thẳng vào 2 file chính là ```upload.php``` và ```i_dont_like_webshell.yar```.
 ##### upload.php
@@ -418,4 +413,5 @@ Loại bỏ ```usleep``` để giảm thời gian, trước khi move file vào f
 
 ### Lời kết
 Thôi thì bài writeup của mình cũng chỉ đến đây thôi =))) Chúc các bạn 1 ngày vui vẻ, mình ngủ đây.
+
 
