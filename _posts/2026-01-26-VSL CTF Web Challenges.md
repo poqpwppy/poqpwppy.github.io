@@ -2,8 +2,8 @@
 ---
 title: VSL CTF Web Challenges
 date: 2026-01-26 19:30:00 +0700
-categories: [Web Exploitation, VSL, GraphQL, IDOR]
-tags: [web, vsl, graphql, idor]
+categories: [Web Exploitation, VSL, GraphQL, IDOR, Local File Inclusion, JFeed Proxy, Race Condition, HTTP Request Smuggling, WAF Bypass, SSTI, HTTP Parameter Pollution]
+tags: [web, vsl, graphql, idor, lfi, toctou, smuggling, waf, ssti, hpp]
 author: khoa
 description: VSL CTF 2026
 toc: true
@@ -713,4 +713,5 @@ VSL CTF is very fun tho lol, and all the challs are sick, pretty new to me haha.
 
 ### End
 Well, that's all for my writeup =))) Have a great day everyone, I'm going to sleep now.
+
 
