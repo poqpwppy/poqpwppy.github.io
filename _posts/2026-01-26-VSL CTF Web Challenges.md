@@ -5,7 +5,7 @@ date: 2026-01-26 19:30:00 +0700
 categories: [Web Exploitation, VSL, GraphQL, IDOR]
 tags: [web, vsl, graphql, idor]
 author: khoa
-description: 
+description: VSL CTF 2026
 toc: true
 comments: true
 ---
@@ -713,3 +713,4 @@ VSL CTF is very fun tho lol, and all the challs are sick, pretty new to me haha.
 
 ### End
 Well, that's all for my writeup =))) Have a great day everyone, I'm going to sleep now.
+
