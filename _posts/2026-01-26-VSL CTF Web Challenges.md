@@ -1,7 +1,7 @@
 ---
 title: VSL CTF Web Challenges
 date: 2026-01-26 19:30:00 +0700
-categories: [Web Exploitation, VSL, GraphQL, IDOR, Local File Inclusion, JFeed Proxy, Race Condition, HTTP Request Smuggling, WAF Bypass, SSTI, HTTP Parameter Pollution]
+categories: [Web Exploitation, VSL]
 tags: [web, vsl, graphql, idor, lfi, toctou, smuggling, waf, ssti, hpp]
 author: khoa
 description: VSL CTF 2026
