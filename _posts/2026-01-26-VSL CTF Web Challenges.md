@@ -12,13 +12,11 @@ comments: true
 ## **ALL WRITEUPS**
 ### mrGraph
 ![img-description](https://i.ibb.co/KcJkb2DM/image-2026-01-26-194344646.png)
-
 _Website_
 
 This website uses ```GraphQL``` and it handle queries in ```/api/query```.
 
 ![img-description](https://i.ibb.co/RT3WnstQ/image-2026-01-26-194457581.png)
-
 _Explore the request_
 
 And in the description I saw hints like: ```Accidentally slipped in the admin password```, ```Quickly tried to hide it```, so I immediately thought of the ```postPassword``` and ```isHidden``` fields.
@@ -26,12 +24,10 @@ And in the description I saw hints like: ```Accidentally slipped in the admin pa
 After using the query: ```{ p4: post(id: 4) { id title content postPassword isHidden author { username } } }```, I immediately found the flag.
 
 ![img-description](https://i.ibb.co/Jw3ZTwzb/image-2026-01-26-194610860.png)
-
 _Found the flag_
 
 ### Key Game
 ![img-description](https://i.ibb.co/WWtCQyqJ/image-2026-01-26-194913051.png)
-
 _Website_
 
 After messing around with the website for a while, I couldn't find anything because I kept failing at the first step.
@@ -41,13 +37,11 @@ In the ```Dockerfile```, I noticed it's installing the ```libjs-jquery-jfeed``` 
 After analyzing the source code, I found that the server not only checks whether you selected the Left or Right lane, but it also requires you to send a verification code h.
 
 ![img-description](https://i.ibb.co/0Vf3dYdC/image-2026-01-26-195503041.png)
-
 _Local Debugging_
 
 After running it with Docker and debugging locally, I found jfeed ```proxy.php```, which uses the fopen function and can open both files and URLs.
 
 ![img-description](https://i.ibb.co/TS1n2fX/image-2026-01-26-200626538.png)
-
 _Local Debugging_
 
 And I found that in ```/etc/apache2``` there is ```Alias /javascript /usr/share/javascript```.
@@ -55,7 +49,6 @@ And I found that in ```/etc/apache2``` there is ```Alias /javascript /usr/share/
 So I obtained the secret key using the LFI vulnerability via JFeed Proxy.
 
 ![img-description](https://i.ibb.co/tpG9DHHb/image-2026-01-26-200917728.png)
-
 _Got the secret key_
 
 And how do i find the flag after getting the secret key?
@@ -79,7 +72,6 @@ When you examine the requests sent to the server, you'll see that the browser al
 After using LFI again via JFeed proxy to check the session file, I found that the path data had been stored in PHP serialized format as follows:
 
 ![img-description](https://i.ibb.co/qM00S61p/image-2026-01-26-202318966.png)
-
 _Session File_
 
 And I wrote a Python script to automate the flag finding process:
@@ -166,14 +158,12 @@ if __name__ == "__main__":
 ```
 
 ![img-description](https://i.ibb.co/VcRSVq6r/image-2026-01-26-202630814.png)
-
 _Flag_
 
 And we got the flag :D
 
 ### CornHub 
 ![img-description](https://i.ibb.co/cc5x9fDg/image-2026-01-26-203836297.png)
-
 _Website_
 
 After analyzing the source code, I found ```5 key points```.
@@ -441,7 +431,6 @@ if __name__ == "__main__":
 ```
 
 ![img-description](https://i.ibb.co/hrwhppw/image-2026-01-26-210430355.png)
-
 _Found Flag_
 
 And we found the flag :D
@@ -473,14 +462,12 @@ except Exception as e:
 ```
 
 ![img-description](https://i.ibb.co/XZnW8LM5/image-2026-01-26-211059583.png)
-
 _Found Flag_
 
 And i got the flag :D
 
 ### Trust Issue
 ![img-description](https://i.ibb.co/pj801S7q/image-2026-01-26-211908400.png)
-
 _Website_
 
 After analyzing the source code, i found some key points:
@@ -527,7 +514,6 @@ So i build this payload:
 After i HPP by adding 1 more text param with the payload:
 
 ![img-description](https://i.ibb.co/N22K0nJQ/image-2026-01-26-213315661.png)
-
 _Found Flag_
 
 And i got the flag :D
@@ -567,7 +553,6 @@ except Exception as e:
 ```
 
 ![img-description](https://i.ibb.co/qL47g4jz/image-2026-01-26-211329577.png)
-
 _Found Flag_
 
 And i got the flag :D
@@ -712,4 +697,5 @@ VSL CTF is very fun tho lol, and all the challs are sick, pretty new to me haha.
 
 ### End
 Well, that's all for my writeup =))) Have a great day everyone, I'm going to sleep now.
+
 
