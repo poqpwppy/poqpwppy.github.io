@@ -3,10 +3,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { allResearch } from "@/.content-collections/generated";
 import { PageHero } from "@/components/ui/PageHero";
 import { Container } from "@/components/ui/Container";
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
-import { ResearchCard } from "@/components/research/ResearchCard";
-import { ResearchFilters } from "@/components/research/ResearchFilters";
-import { StaggeredGrid, StaggeredItem } from "@/components/ui/StaggeredGrid";
+import { ResearchGrid } from "@/components/research/ResearchGrid";
+import { ResearchExplorer } from "@/components/research/ResearchExplorer";
 import { pageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({
@@ -20,21 +18,19 @@ export async function generateMetadata({
 
 export default async function ResearchPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "research" });
   const nav = await getTranslations({ locale, namespace: "nav" });
-  const sp = await searchParams;
-  const category = typeof sp.category === "string" ? sp.category : "";
 
-  const items = [...allResearch]
-    .filter((r) => !category || r.category === category)
-    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  // Fully static export: render every item server-side; `ResearchExplorer`
+  // filters the timeline client-side from the URL query string.
+  const items = [...allResearch].sort((a, b) =>
+    String(b.date).localeCompare(String(a.date)),
+  );
 
   return (
     <>
@@ -46,29 +42,21 @@ export default async function ResearchPage({
       />
 
       <Container className="pb-24">
-        <AnimatedSection className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-neutral-800 pb-6">
-          <Suspense fallback={<div className="h-8" />}>
-            <ResearchFilters />
-          </Suspense>
-          <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-neutral-500">
-            TOTAL: {items.length.toString().padStart(2, "0")}
-          </p>
-        </AnimatedSection>
-
-        {/* Research Grid */}
-        <StaggeredGrid className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {items.map((r, i) => (
-            <StaggeredItem key={r._meta.path} className="h-full">
-              <ResearchCard research={r} locale={locale} index={i + 1} className="h-full" />
-            </StaggeredItem>
-          ))}
-        </StaggeredGrid>
-
-        {items.length === 0 ? (
-          <div className="border border-neutral-800 bg-neutral-950 px-6 py-16 text-center">
-            <p className="font-mono text-sm text-neutral-500">{t("empty")}</p>
-          </div>
-        ) : null}
+        <Suspense
+          fallback={
+            <>
+              <div className="mb-10 flex h-8 items-center justify-between gap-4 border-b border-neutral-800 pb-6">
+                <div />
+                <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-neutral-500">
+                  TOTAL: {items.length.toString().padStart(2, "0")}
+                </p>
+              </div>
+              <ResearchGrid items={items} locale={locale} />
+            </>
+          }
+        >
+          <ResearchExplorer items={items} locale={locale} />
+        </Suspense>
       </Container>
     </>
   );

@@ -1,0 +1,13 @@
+name: "memharvest"
+description: "Parser memory dump viết bằng Go — tự detect profile, extract process env, network artifact và hashdump nhanh hơn 10x so với dòng lệnh Volatility."
+category: "forensics"
+language: "go"
+repository: "https://github.com/poqpwppy/memharvest"
+license: "Apache-2.0"
+stars: 64
+maintained: false
+tags:
+  - "memory"
+  - "forensics"
+  - "volatility"
+  - "go"

@@ -1,0 +1,13 @@
+name: "hashburst"
+description: "Crack hash cực nhanh viết bằng Rust — hỗ trợ MD5, SHA-1/256, NTLM, bcrypt với bộ mask-based rule engine, nhắm tới tốc độ hơn 1G hash/s trên CPU."
+category: "crypto"
+language: "rust"
+repository: "https://github.com/poqpwppy/hashburst"
+license: "MIT"
+stars: 96
+maintained: true
+tags:
+  - "hashcat"
+  - "cracking"
+  - "rust"
+  - "ntlm"

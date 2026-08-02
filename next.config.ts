@@ -22,4 +22,8 @@ const config: NextConfig = {
   },
 };
 
-export default withIntl(withContentCollections(config));
+// `withContentCollections` is async (returns a Promise). It must be the
+// OUTERMOST wrapper so Next.js awaits the resolved config; otherwise
+// `withIntl` (sync) copies nothing out of the pending Promise and every
+// custom option below (`output: "export"`, images, …) is silently dropped.
+export default withContentCollections(withIntl(config));

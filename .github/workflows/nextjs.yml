@@ -31,8 +31,7 @@ jobs:
           static_site_generator: next
       - name: Install dependencies
         run: |
-          rm -f package-lock.json
-          npm install
+          npm ci
       - name: Build with Next.js
         run: npm run build
       - name: Upload artifact

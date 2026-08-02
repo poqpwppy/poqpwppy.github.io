@@ -1,4 +1,6 @@
-import { getTranslations } from "next-intl/server";
+"use client";
+
+import { useTranslations } from "next-intl";
 import type { Writeup } from "@/.content-collections/generated";
 import { cn, formatDate } from "@/lib/utils";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
@@ -18,15 +20,15 @@ type WriteupCardProps = {
  * Editorial index card for a writeup — number gutter, meta row, title,
  * description and a hover arrow. Rendered on home + archive.
  */
-export async function WriteupCard({
+export function WriteupCard({
   writeup,
   locale,
   index,
   className,
   compact,
 }: WriteupCardProps) {
-  const tax = await getTranslations({ locale, namespace: "taxonomies" });
-  const common = await getTranslations({ locale, namespace: "common" });
+  const tax = useTranslations("taxonomies");
+  const common = useTranslations("common");
 
   const href = `/writeups/${writeup._meta.path}`;
   const difficultyColor = DIFFICULTY_COLORS[writeup.difficulty];

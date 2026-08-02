@@ -1,0 +1,13 @@
+name: "wordgen"
+description: "Sinh wordlist theo cấu trúc công ty — kết hợp tên, năm, ký tự đặc biệt theo template; tối ưu cho brute-force mật khẩu nội bộ có chính sách phức tạp."
+category: "utility"
+language: "python"
+repository: "https://github.com/poqpwppy/wordgen"
+license: "MIT"
+stars: 45
+maintained: true
+tags:
+  - "wordlist"
+  - "bruteforce"
+  - "password"
+  - "generator"

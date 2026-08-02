@@ -1,2 +1,141 @@
 
-export default []
+export default [
+  {
+    "name": "hashburst",
+    "description": "Crack hash cực nhanh viết bằng Rust — hỗ trợ MD5, SHA-1/256, NTLM, bcrypt với bộ mask-based rule engine, nhắm tới tốc độ hơn 1G hash/s trên CPU.",
+    "category": "crypto",
+    "language": "rust",
+    "repository": "https://github.com/poqpwppy/hashburst",
+    "license": "MIT",
+    "stars": 96,
+    "maintained": true,
+    "tags": [
+      "hashcat",
+      "cracking",
+      "rust",
+      "ntlm"
+    ],
+    "_meta": {
+      "filePath": "hashburst.yaml",
+      "fileName": "hashburst.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "hashburst"
+    }
+  },
+  {
+    "name": "linpep",
+    "description": "Linux privilege escalation enumerator nhẹ — quét SUID, cron, capabilities, writable PATH, và kernel CVEs; chỉ cần shell, không cần tool bên ngoài.",
+    "category": "post-exploitation",
+    "language": "bash",
+    "repository": "https://github.com/poqpwppy/linpep",
+    "license": "GPL-3.0",
+    "stars": 212,
+    "maintained": true,
+    "tags": [
+      "privilege-escalation",
+      "linux",
+      "enumerator",
+      "bash"
+    ],
+    "_meta": {
+      "filePath": "linpep.yaml",
+      "fileName": "linpep.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "linpep"
+    }
+  },
+  {
+    "name": "memharvest",
+    "description": "Parser memory dump viết bằng Go — tự detect profile, extract process env, network artifact và hashdump nhanh hơn 10x so với dòng lệnh Volatility.",
+    "category": "forensics",
+    "language": "go",
+    "repository": "https://github.com/poqpwppy/memharvest",
+    "license": "Apache-2.0",
+    "stars": 64,
+    "maintained": false,
+    "tags": [
+      "memory",
+      "forensics",
+      "volatility",
+      "go"
+    ],
+    "_meta": {
+      "filePath": "memharvest.yaml",
+      "fileName": "memharvest.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "memharvest"
+    }
+  },
+  {
+    "name": "portray",
+    "description": "Port scanner asyncio viết bằng Python — phát hiện service qua banner grab và TLS fingerprint, output dạng JSON/CSV cho pipeline tự động.",
+    "category": "recon",
+    "language": "python",
+    "repository": "https://github.com/poqpwppy/portray",
+    "license": "MIT",
+    "stars": 148,
+    "maintained": true,
+    "tags": [
+      "port-scan",
+      "asyncio",
+      "fingerprint",
+      "scanner"
+    ],
+    "_meta": {
+      "filePath": "portray.yaml",
+      "fileName": "portray.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "portray"
+    }
+  },
+  {
+    "name": "sniper",
+    "description": "HTTP request fuzzer đa luồng — phát hiện SSRF, open redirect và parameter pollution qua thư viện request hijack; dùng proxy chain và tự động phát hiện tham số ẩn.",
+    "category": "exploitation",
+    "language": "python",
+    "repository": "https://github.com/poqpwppy/sniper",
+    "license": "MIT",
+    "stars": 121,
+    "maintained": true,
+    "tags": [
+      "fuzzer",
+      "ssrf",
+      "http",
+      "parameter-discovery"
+    ],
+    "_meta": {
+      "filePath": "sniper.yaml",
+      "fileName": "sniper.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "sniper"
+    }
+  },
+  {
+    "name": "wordgen",
+    "description": "Sinh wordlist theo cấu trúc công ty — kết hợp tên, năm, ký tự đặc biệt theo template; tối ưu cho brute-force mật khẩu nội bộ có chính sách phức tạp.",
+    "category": "utility",
+    "language": "python",
+    "repository": "https://github.com/poqpwppy/wordgen",
+    "license": "MIT",
+    "stars": 45,
+    "maintained": true,
+    "tags": [
+      "wordlist",
+      "bruteforce",
+      "password",
+      "generator"
+    ],
+    "_meta": {
+      "filePath": "wordgen.yaml",
+      "fileName": "wordgen.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "wordgen"
+    }
+  }
+]

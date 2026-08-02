@@ -1,5 +1,7 @@
+"use client";
+
 import { Link } from "@/i18n/navigation";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import type { Research } from "@/.content-collections/generated";
 import { cn, formatDate } from "@/lib/utils";
 
@@ -13,9 +15,9 @@ type ResearchCardProps = {
   className?: string;
 };
 
-export async function ResearchCard({ research, locale, index, className }: ResearchCardProps) {
-  const tax = await getTranslations({ locale, namespace: "taxonomies" });
-  const common = await getTranslations({ locale, namespace: "common" });
+export function ResearchCard({ research, locale, index, className }: ResearchCardProps) {
+  const tax = useTranslations("taxonomies");
+  const common = useTranslations("common");
   const href = `/research/${research._meta.path}`;
 
   return (
