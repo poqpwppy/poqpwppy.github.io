@@ -1,0 +1,980 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+/* ─────────────────────────────────────────────────────────────
+   DESIGN TOKENS — "Acid Chrome"
+   Cool near-black + acid lime + liquid chrome gradient.
+   Cyber-grunge, dark-surreal, Y2K-3D.
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Type — `--font-sans`/`--font-mono`/`--font-display` are set by next/font
+     at runtime; the fallback stacks here keep the design intact if the
+     variable is missing (e.g. a plain browser stylesheet context). */
+  --font-sans: var(--font-pixel), VT323, monospace;
+  --font-mono: var(--font-pixel), VT323, monospace;
+  --font-display: var(--font-pixel), VT323, monospace;
+  --font-serif: var(--font-pixel), VT323, monospace;
+
+  /* Surfaces — deep obsidian black, high-contrast monochrome depth */
+  --color-bg: #000000;
+  --color-bg2: #09090b;
+  --color-bg3: #121215;
+  --color-bg4: #1c1c21;
+
+  /* Text — pure white, metallic silver, dark graphite */
+  --color-fg: #ffffff;
+  --color-fg2: #a1a1aa;
+  --color-fg3: #71717a;
+
+  /* Lines & borders — crisp monochrome hairlines */
+  --color-line: #27272a;
+  --color-line2: #3f3f46;
+  --color-line3: #52525b;
+
+  /* Accents — Liquid Chrome Monochrome (Black & White) */
+  --color-accent: #ffffff;
+  --color-accent-strong: #f4f4f5;
+  --color-accent-dim: #71717a;
+  --color-magenta: #a1a1aa;
+  --color-chrome: #e4e4e7;
+  --color-violet: #71717a;
+  --color-mint: #d4d4d8;
+  --color-teal: #a1a1aa;
+  --color-sky: #e4e4e7;
+
+  /* Semantic — high-contrast subtle indicators */
+  --color-ok: #e4e4e7;
+  --color-warn: #d4d4d8;
+  --color-err: #ffffff;
+  --color-info: #a1a1aa;
+
+  /* Liquid chrome monochrome — pure white -> silver -> dark steel -> chrome -> pure white */
+  --chrome-grad: linear-gradient(
+    120deg,
+    #ffffff 0%,
+    #e4e4e7 25%,
+    #71717a 50%,
+    #d4d4d8 75%,
+    #ffffff 100%
+  );
+  --chrome-grad-soft: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(228, 228, 231, 0.35) 25%,
+    rgba(113, 113, 122, 0.25) 50%,
+    rgba(212, 212, 216, 0.35) 75%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+  --acid-glow: 0 0 24px rgba(255, 255, 255, 0.22);
+
+  /* Radii — restrained, intentional (never pill-y) */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+
+  /* Motion — fluid, ultra-smooth (jcedrik-style ease-out-expo) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes hudScanline {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(380%);
+    opacity: 0;
+  }
+}
+
+.animate-hud-scanline {
+  animation: hudScanline 6s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROSE & MDX ARTICLE TYPOGRAPHY STYLES
+   ───────────────────────────────────────────────────────────── */
+
+.prose-article h1,
+.prose-article h2,
+.prose-article h3,
+.prose-article h4 {
+  font-family: var(--font-pixel), var(--font-mono), monospace;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose-article h1 {
+  font-size: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.prose-article h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid rgba(230, 0, 38, 0.35);
+  padding-bottom: 0.35rem;
+}
+
+.prose-article h3 {
+  font-size: 1.25rem;
+  color: #e4e4e7;
+}
+
+.prose-article p {
+  line-height: 1.8;
+  color: #a1a1aa;
+  margin-bottom: 1.25rem;
+}
+
+.prose-article code:not(pre code) {
+  font-family: var(--font-pixel), var(--font-mono), monospace;
+  color: #e60026;
+  background: rgba(230, 0, 38, 0.1);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.875em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE
+   ───────────────────────────────────────────────────────────── */
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #3f3f46 #000000;
+  }
+
+  html {
+    background: #000000;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    /* Transparent is REQUIRED: an opaque body background paints over the
+       -z-1 background wrapper (ASCII canvas + black base), hiding them.
+       html #000 + the wrapper's black base layer already guarantee a
+       full-screen pure-black background on every route. */
+    background: transparent;
+    color: var(--color-fg);
+    min-height: 100vh;
+    overflow-x: clip;
+    position: relative;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #0c0c0e;
+  }
+
+  *,
+  *::before,
+  *::after,
+  html,
+  body {
+    cursor: none !important;
+  }
+
+  /* Completely Hide Native Browser Scrollbar Everywhere */
+  html, body {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+  }
+
+  /* Focus ring — visible, editorial, not a generic box-shadow blob */
+  :focus-visible {
+    outline: 1.5px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Skip link — visually hidden until focused */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    background: var(--color-bg3);
+    color: var(--color-fg);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    padding: 0.5em 1em;
+    transform: translateY(-200%);
+    transition: transform 160ms ease;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  /* Respect reduced motion globally */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LAYOUT HELPERS
+   ───────────────────────────────────────────────────────────── */
+
+@utility container-page {
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+@utility container-narrow {
+  width: 100%;
+  max-width: 46rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* Visible editorial grid — faint vertical column rules */
+@utility bg-grid {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-line) 0px,
+    var(--color-line) 1px,
+    transparent 1px,
+    transparent calc(100% / 12)
+  );
+  background-size: calc(100% / 12) 100%;
+  background-position: 0 0;
+}
+
+@utility bg-grid-faint {
+  background-image:
+    linear-gradient(to right, transparent 99%, rgba(255, 255, 255, 0.02) 99%),
+    linear-gradient(to bottom, transparent 99%, rgba(255, 255, 255, 0.02) 99%);
+  background-size: 64px 64px;
+}
+
+/* Film grain overlay */
+@utility noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.035;
+}
+
+/* Editorial eyebrow label */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Section index number (01 / 02 …) */
+@utility section-index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-fg3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Right-rail dash — expands from a dot to a 1rem rule on hover/active */
+@utility rail-dash {
+  display: inline-block;
+  width: 0.25rem;
+  height: 1px;
+  background: currentColor;
+  transition: width 350ms var(--ease-out-expo);
+}
+
+/* HUD cursor label — small mono plate that follows the pointer */
+@utility hud-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-fg2);
+  background: var(--color-bg3);
+  border: 1px solid var(--color-line2);
+  border-radius: var(--radius-xs);
+  padding: 0.4em 0.7em;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+/* Fixed corner brackets — static HUD framing around the viewport */
+@utility corner-bracket {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.corner-bracket--tl {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid var(--color-accent);
+  border-left: 1px solid var(--color-accent);
+}
+.corner-bracket--tr {
+  top: 12px;
+  right: 12px;
+  border-top: 1px solid var(--color-accent);
+  border-right: 1px solid var(--color-accent);
+}
+.corner-bracket--bl {
+  bottom: 12px;
+  left: 12px;
+  border-bottom: 1px solid var(--color-accent);
+  border-left: 1px solid var(--color-accent);
+}
+.corner-bracket--br {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 1px solid var(--color-accent);
+  border-right: 1px solid var(--color-accent);
+}
+
+/* ── Acid chrome ────────────────────────────────────────────── */
+
+/* Liquid chrome text — gradient clipped to glyphs, slowly flowing */
+@utility chrome-text {
+  background-image: linear-gradient(120deg, #ffffff 0%, #a1a1aa 20%, #ffffff 40%, #52525b 60%, #e4e4e7 80%, #ffffff 100%);
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: chrome-flow 8s ease-in-out infinite alternate;
+}
+
+@keyframes chrome-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Molten chrome surface — faint gradient fill + sweeping sheen */
+@utility chrome-surface {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--color-chrome) 22%, var(--color-line));
+  background: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--color-violet) 10%, var(--color-bg2)) 0%,
+    color-mix(in srgb, var(--color-chrome) 6%, var(--color-bg2)) 50%,
+    color-mix(in srgb, var(--color-magenta) 8%, var(--color-bg2)) 100%
+  );
+  overflow: hidden;
+}
+.chrome-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(232, 244, 255, 0.08) 45%,
+    rgba(212, 255, 46, 0.05) 55%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 900ms var(--ease-out-expo);
+}
+.chrome-surface:hover::after {
+  transform: translateX(120%);
+}
+
+/* RGB channel-split glitch — invisible at rest, the two channels oscillate
+   out-of-phase against each other WHILE hovered and stop cleanly on leave.
+   The loop is gated by `animation-play-state` (paused → running); the global
+   reduced-motion block neutralizes the loop, leaving just the static split. */
+@utility glitch-rgb {
+  position: relative;
+}
+.glitch-rgb::before,
+.glitch-rgb::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  /* Paused at rest; the 0% frame equals the static base offset so a paused
+     pseudo-element reads exactly like the no-animation case. */
+  animation: glitch-loop-a 0.8s ease-in-out infinite paused;
+}
+.glitch-rgb::before {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+.glitch-rgb::after {
+  color: #71717a;
+  animation-name: glitch-loop-b;
+}
+.glitch-rgb:hover::before,
+.glitch-rgb:hover::after,
+.glitch-rgb[data-glitch="on"]::before,
+.glitch-rgb[data-glitch="on"]::after {
+  opacity: 0.75;
+  animation-play-state: running;
+}
+
+@keyframes glitch-loop-a {
+  0%, 100% { transform: translate( 2px, -1px); }
+  25%      { transform: translate(-3px,  1px); }
+  50%      { transform: translate( 1px,  2px); }
+  75%      { transform: translate(-1px, -2px); }
+}
+/* Opposite phase to loop-a so the cyan/magenta channels crawl against each other. */
+@keyframes glitch-loop-b {
+  0%, 100% { transform: translate(-2px,  1px); }
+  25%      { transform: translate( 3px, -1px); }
+  50%      { transform: translate(-1px, -2px); }
+  75%      { transform: translate( 1px,  2px); }
+}
+
+/* CRT scanlines */
+@utility scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Acid neon glow */
+@utility acid-glow {
+  box-shadow: var(--acid-glow);
+}
+
+/* Terminal caret blink */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@utility animate-blink {
+  animation: blink 1.1s step-end infinite;
+}
+
+/* Slow scanline drift (used sparingly) */
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@utility animate-scan {
+  animation: scan 9s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@utility animate-float {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+@keyframes sao-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sao-spin-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+.sao-wheel-spin {
+  animation: sao-spin 26s linear infinite;
+}
+
+.sao-wheel-spin:hover {
+  animation-play-state: paused;
+}
+
+.sao-wheel-counter {
+  animation: sao-spin-reverse 26s linear infinite;
+}
+
+.sao-wheel-spin:hover .sao-wheel-counter {
+  animation-play-state: paused;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROSE — compiled MDX content
+   ───────────────────────────────────────────────────────────── */
+
+@layer components {
+  .prose-article {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: #d4d4d8;
+  }
+
+  .prose-article > * + * {
+    margin-top: 1.4em;
+  }
+
+  .prose-article h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: #ffffff;
+    margin-top: 2.6em;
+    scroll-margin-top: 6.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    border-left: 4px solid #e60026;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .prose-article h2:first-child {
+    margin-top: 0;
+  }
+
+  .prose-article h3 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    color: #f4f4f5;
+    margin-top: 2.2em;
+    scroll-margin-top: 6.5rem;
+  }
+
+  .prose-article h4 {
+    font-family: var(--font-mono);
+    font-size: 0.925rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    margin-top: 2em;
+    scroll-margin-top: 6.5rem;
+  }
+
+  .prose-article p {
+    text-align: justify;
+    text-wrap: pretty;
+    color: #d4d4d8;
+  }
+
+  .prose-article strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .prose-article a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--color-accent) 45%,
+      transparent
+    );
+    transition: text-decoration-color 160ms ease;
+  }
+  .prose-article a:hover {
+    text-decoration-color: var(--color-accent);
+  }
+
+  .prose-article ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .prose-article ul li {
+    position: relative;
+    padding-left: 1.4em;
+    margin-block: 0.4em;
+  }
+  .prose-article ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-size: 0.85em;
+    top: 0.15em;
+  }
+
+  .prose-article ol {
+    list-style: none;
+    counter-reset: article-ol;
+    padding-left: 0;
+  }
+  .prose-article ol li {
+    counter-increment: article-ol;
+    position: relative;
+    padding-left: 2.2em;
+    margin-block: 0.4em;
+  }
+  .prose-article ol li::before {
+    content: counter(article-ol, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .prose-article table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+    overflow: hidden;
+  }
+  .prose-article thead th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-fg);
+    text-align: left;
+    padding: 0.7em 1em;
+    background: var(--color-bg3);
+    border: 1px solid var(--color-line);
+  }
+  .prose-article td {
+    padding: 0.65em 1em;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg2);
+  }
+  .prose-article td code {
+    font-size: 0.875em;
+  }
+
+  .prose-article code:not(pre code) {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--color-bg3);
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    padding: 0.15em 0.45em;
+    color: var(--color-mint);
+    white-space: nowrap;
+  }
+
+  .prose-article .katex-display {
+    padding-block: 0.6em;
+    overflow-x: auto;
+  }
+  .prose-article .katex {
+    font-size: 1.06em;
+  }
+
+  /* Heading anchor links */
+  .prose-article .heading-anchor {
+    display: inline-block;
+    margin-left: 0.4em;
+    opacity: 0;
+    color: var(--color-fg3);
+    text-decoration: none;
+    font-size: 0.8em;
+    transition: opacity 140ms ease, color 140ms ease;
+  }
+  .prose-article h2:hover .heading-anchor,
+  .prose-article h3:hover .heading-anchor,
+  .prose-article h4:hover .heading-anchor {
+    opacity: 1;
+    color: var(--color-accent);
+  }
+
+  /* ── Callouts ─────────────────────────────────────────────── */
+  .prose-article .callout {
+    position: relative;
+    border: 1px solid var(--color-line2);
+    border-left-width: 3px;
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.1rem 1rem 1.4rem;
+    background: var(--color-bg3);
+    margin-block: 1.6em;
+    font-size: 0.96em;
+  }
+  .prose-article .callout p {
+    margin: 0;
+    text-align: left;
+  }
+  .prose-article .callout-note {
+    border-left-color: var(--color-info);
+  }
+  .prose-article .callout-warning {
+    border-left-color: var(--color-warn);
+  }
+  .prose-article .callout-tip {
+    border-left-color: var(--color-mint);
+  }
+  .prose-article .callout-danger {
+    border-left-color: var(--color-err);
+  }
+
+  /* ── Code blocks ──────────────────────────────────────────── */
+  .prose-article .codeblock {
+    margin-block: 1.8em;
+    border: 1px solid var(--color-line2);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #101014;
+  }
+  .prose-article .codeblock-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.9em;
+    padding: 0.5em 0.9em;
+    background: var(--color-bg3);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .prose-article .codeblock-file {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-fg2);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .prose-article .codeblock-file::before {
+    content: "📄";
+    font-size: 0.85em;
+    opacity: 0.7;
+  }
+  .prose-article .codeblock-lang {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-fg3);
+  }
+  .prose-article .codeblock-copy {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-fg3);
+    background: transparent;
+    border: 1px solid var(--color-line2);
+    border-radius: var(--radius-xs);
+    padding: 0.3em 0.8em;
+    cursor: pointer;
+    transition: color 140ms ease, border-color 140ms ease,
+      background 140ms ease;
+  }
+  .prose-article .codeblock-copy:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent-dim);
+    background: rgba(255, 143, 79, 0.07);
+  }
+  .prose-article .codeblock-copy[data-copied="true"] {
+    color: var(--color-mint);
+    border-color: rgba(110, 231, 183, 0.4);
+  }
+
+  /* Shiki pre */
+  .prose-article pre.shiki {
+    margin: 0;
+    padding: 1.1rem 1.25rem;
+    background: transparent !important;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    tab-size: 4;
+    font-variant-ligatures: none;
+  }
+  .prose-article pre.shiki code {
+    font-family: var(--font-mono);
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    white-space: pre;
+  }
+  .prose-article pre.shiki .line {
+    min-height: 1.7em;
+  }
+  .prose-article pre.shiki .line.highlighted {
+    background: rgba(255, 143, 79, 0.08);
+    box-shadow: inset 2px 0 0 var(--color-accent);
+  }
+  .prose-article pre.shiki .line.diff {
+    background: rgba(110, 231, 183, 0.06);
+  }
+  .prose-article pre.shiki .line.diff.remove {
+    background: rgba(255, 92, 92, 0.08);
+  }
+
+  /* Images */
+  .prose-article img {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-line);
+    max-width: 100%;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--color-line);
+    margin-block: 2.5em;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   UI SURFACES — shared component classes
+   ───────────────────────────────────────────────────────────── */
+
+/* Elevated card surface with a hairline border (squared — no radii) */
+.card-surface {
+  background: var(--color-bg2);
+  border: 1px solid var(--color-line);
+}
+
+.card-hover {
+  transition: border-color 300ms var(--ease-out-expo), background 300ms var(--ease-out-expo);
+}
+.card-hover:hover {
+  border-color: var(--color-line3);
+  background: var(--color-bg3);
+}
+
+/* Small mono tag / chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--color-fg2);
+  background: var(--color-bg3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-xs);
+  padding: 0.38em 0.7em;
+  white-space: nowrap;
+}
+
+/* Animated underline link */
+.link-underline {
+  position: relative;
+  color: var(--color-fg2);
+  transition: color 160ms ease;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15em;
+  width: 100%;
+  height: 1px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-out-expo);
+}
+.link-underline:hover {
+  color: var(--color-fg);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Grid column overlay — faint editorial rule on wide screens */
+.grid-overlay {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-line) 0px,
+    var(--color-line) 1px,
+    transparent 1px,
+    transparent 8.333%
+  );
+  background-size: 100% 100%;
+  opacity: 0.35;
+}

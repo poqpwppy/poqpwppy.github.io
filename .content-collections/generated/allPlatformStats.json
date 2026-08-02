@@ -1,0 +1,40 @@
+[
+  {
+    "platforms": [
+      {
+        "platform": "hackthebox",
+        "points": 87,
+        "rank": 2451,
+        "solves": 96,
+        "url": "https://www.hackthebox.com/home/users/profile/0"
+      },
+      {
+        "platform": "tryhackme",
+        "points": 210,
+        "rank": 4102,
+        "solves": 134,
+        "url": "https://tryhackme.com/p/poqpwppy"
+      },
+      {
+        "platform": "ctftime",
+        "points": 420,
+        "rank": 387,
+        "solves": 76,
+        "url": "https://ctftime.org/user/0"
+      },
+      {
+        "platform": "rootme",
+        "points": 640,
+        "solves": 88,
+        "url": "https://www.root-me.org/poqpwppy"
+      }
+    ],
+    "_meta": {
+      "filePath": "platforms.yaml",
+      "fileName": "platforms.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "platforms"
+    }
+  }
+]

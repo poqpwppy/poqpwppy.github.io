@@ -1,0 +1,44 @@
+[
+  {
+    "name": "eJPT — Junior Penetration Tester",
+    "issuer": "INE Security",
+    "year": 2025,
+    "status": "earned",
+    "url": "https://security.ine.com/certifications/ejpt-certification/",
+    "_meta": {
+      "filePath": "ejpt.yaml",
+      "fileName": "ejpt.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "ejpt"
+    }
+  },
+  {
+    "name": "OSCP — Offensive Security Certified Professional",
+    "issuer": "OffSec",
+    "year": 2026,
+    "status": "in-progress",
+    "url": "https://www.offsec.com/courses/pen-200/",
+    "_meta": {
+      "filePath": "oscp.yaml",
+      "fileName": "oscp.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "oscp"
+    }
+  },
+  {
+    "name": "SOC Level 1",
+    "issuer": "TryHackMe",
+    "year": 2024,
+    "status": "earned",
+    "url": "https://tryhackme.com/",
+    "_meta": {
+      "filePath": "soc-level-1.yaml",
+      "fileName": "soc-level-1.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "soc-level-1"
+    }
+  }
+]

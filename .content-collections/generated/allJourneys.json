@@ -1,0 +1,58 @@
+[
+  {
+    "entries": [
+      {
+        "period": "2021",
+        "title": "Bắt đầu với bảo mật",
+        "description": "Tự học qua OverTheWire, TryHackMe. Lần đầu chạy nmap và brute-force SSH trong phòng lab.",
+        "type": "milestone"
+      },
+      {
+        "period": "2022 — nay",
+        "title": "Cử nhân An toàn thông tin",
+        "org": "Đại học Bách khoa",
+        "description": "Chuyên ngành an toàn thông tin. Các môn trọng tâm: mật mã học, an ninh mạng, an toàn ứng dụng web.",
+        "type": "education"
+      },
+      {
+        "period": "2023",
+        "title": "Thành viên CLB bảo mật",
+        "org": "CTF@HUST",
+        "description": "Tham gia đội CTF của trường, luyện tập hàng tuần, phụ trách mảng web & crypto.",
+        "type": "experience"
+      },
+      {
+        "period": "2023",
+        "title": "Giải CTF đầu tiên",
+        "description": "Top 20 tại một giải sinh viên khu vực. Lần đầu hiểu cảm giác 'aha moment' khi pwn được binary.",
+        "type": "milestone"
+      },
+      {
+        "period": "2024 — nay",
+        "title": "Intern SOC",
+        "org": "Công ty bảo mật quy mô vừa",
+        "description": "Giám sát alert, điều tra incident cơ bản, xây dashboard detection với Elastic + KQL.",
+        "type": "experience"
+      },
+      {
+        "period": "2024",
+        "title": "Top 100 CTFtime theo team",
+        "description": "Team đạt hạng cao trong một giải lớn quốc tế; bản thân lọt top cá nhân của giải.",
+        "type": "milestone"
+      },
+      {
+        "period": "2025",
+        "title": "Nghiên cứu độc lập",
+        "description": "Tập trung nghiên cứu SSRF bypass, JWT alg confusion; bắt đầu viết research dài và chia sẻ công khai.",
+        "type": "milestone"
+      }
+    ],
+    "_meta": {
+      "filePath": "journey.yaml",
+      "fileName": "journey.yaml",
+      "directory": ".",
+      "extension": "yaml",
+      "path": "journey"
+    }
+  }
+]
