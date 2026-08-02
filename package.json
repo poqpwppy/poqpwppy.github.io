@@ -12,7 +12,6 @@
     "@content-collections/core": "^0.15.2",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.11",
-    "@parcel/watcher-win32-x64": "^2.6.0",
     "@shikijs/transformers": "^3.23.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",
