@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { allWriteups, allResearch } from "@/.content-collections/generated";
 
-const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.dev";
+const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.github.io";
 
 /** Static routes shared by every locale (vi at root, en under /en). */
 const STATIC = [

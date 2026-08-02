@@ -1,7 +1,9 @@
 import { allWriteups, allResearch } from "@/.content-collections/generated";
 import { profile } from "@/lib/profile";
 
-const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.dev";
+export const dynamic = "force-static";
+
+const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.github.io";
 
 type FeedItem = {
   title: string;
