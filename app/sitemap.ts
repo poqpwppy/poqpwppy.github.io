@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { allWriteups, allResearch } from "@/.content-collections/generated";
 
+export const dynamic = "force-static";
+
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.github.io";
 
 /** Static routes shared by every locale (vi at root, en under /en). */
