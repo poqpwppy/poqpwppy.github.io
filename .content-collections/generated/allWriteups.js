@@ -5,7 +5,8 @@ export default [
     "date": "2026-02-22",
     "categories": [
       "Web Exploitation",
-      "BITSCTF"
+      "BITSCTF",
+      "Hard"
     ],
     "tags": [
       "web",
@@ -24,7 +25,7 @@ export default [
       "misconfiguration",
       "proxy",
       "vhost",
-      "medium"
+      "Hard"
     ],
     "author": "khoa",
     "description": "BITSCTF 2026",
@@ -42,7 +43,7 @@ export default [
     "readingTime": 4,
     "year": 2026,
     "category": "web",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "ctfName": "BITSCTF",
     "ctfYear": undefined
   },

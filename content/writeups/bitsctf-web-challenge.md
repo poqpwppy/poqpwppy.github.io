@@ -1,8 +1,8 @@
 ---
 title: BITSCTF Web Challenge
 date: 2026-02-22 12:30:00 +0700
-categories: [Web Exploitation, BITSCTF]
-tags: [web, reverse-proxy, rust, flask, url-encoding, auth-bypass, elysia, bun, cookie, rce, command-injection, cloudflare, git, misconfiguration, proxy, vhost, medium]
+categories: [Web Exploitation, BITSCTF, Hard]
+tags: [web, reverse-proxy, rust, flask, url-encoding, auth-bypass, elysia, bun, cookie, rce, command-injection, cloudflare, git, misconfiguration, proxy, vhost, Hard]
 author: khoa
 description: BITSCTF 2026
 toc: true
