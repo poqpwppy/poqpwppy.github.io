@@ -50,6 +50,7 @@ const listItemVariants = {
 export function MobileTocCapsule({ toc, label }: { toc: TocEntry[]; label?: string }) {
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
+  const [nearEnd, setNearEnd] = useState(false);
   const [active, setActive] = useState<string>("");
   const [items, setItems] = useState<TocEntry[]>(() => toc ?? []);
 
@@ -107,6 +108,26 @@ export function MobileTocCapsule({ toc, label }: { toc: TocEntry[]; label?: stri
     return () => window.removeEventListener("scroll", handleScroll);
   }, [toc]);
 
+  // Fade the floating INDEX button out once the reader scrolls into the
+  // related-posts section (near the end of the post), and fade it back in
+  // when scrolling back up into the article body. Closing the drawer too if
+  // it was open. Posts without a related section have no sentinel element,
+  // so the button stays visible the whole time.
+  useEffect(() => {
+    const related = document.getElementById("related-posts");
+    if (!related) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setNearEnd(entry.isIntersecting);
+        if (entry.isIntersecting) setOpen(false);
+      },
+      { rootMargin: "0px" },
+    );
+    observer.observe(related);
+    return () => observer.disconnect();
+  }, []);
+
   if (!items || !items.length) return null;
 
   const scrollTo = (id: string) => {
@@ -123,10 +144,20 @@ export function MobileTocCapsule({ toc, label }: { toc: TocEntry[]; label?: stri
 
   return (
     <div className="fixed bottom-6 right-6 z-40 lg:hidden">
-      {/* Floating toggle button */}
+      {/* Floating toggle button — fades out near the end of the post */}
+      <motion.div
+        animate={{
+          opacity: nearEnd ? 0 : 1,
+          y: nearEnd ? 16 : 0,
+          pointerEvents: nearEnd ? "none" : "auto",
+        }}
+        transition={{ duration: reduce ? 0 : 0.3, ease: [0.4, 0, 0.2, 1] }}
+        aria-hidden={nearEnd || undefined}
+      >
       <motion.button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
+        tabIndex={nearEnd ? -1 : 0}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         className="relative flex items-center gap-2 border border-neutral-700/80 bg-black/85 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-neutral-200 backdrop-blur-xl shadow-xl hover:border-[#e60026] hover:text-[#e60026] transition-colors duration-300"
@@ -158,6 +189,7 @@ export function MobileTocCapsule({ toc, label }: { toc: TocEntry[]; label?: stri
         </motion.span>
         <span>{open ? "CLOSE" : "INDEX"}</span>
       </motion.button>
+      </motion.div>
 
       {/* Slide-up drawer */}
       <AnimatePresence>

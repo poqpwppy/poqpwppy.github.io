@@ -203,7 +203,7 @@ export default async function ResearchDetailPage({
 
       {/* ── Related research ── */}
       {related.length > 0 ? (
-        <Container className="relative z-10 pb-24 pt-4">
+        <Container id="related-posts" className="relative z-10 pb-24 pt-4">
           <AnimatedSection className="border-t border-[#e60026]/20 pt-10" delay={0.05}>
             <p className="eyebrow mb-6 flex items-center gap-2.5">
               <span aria-hidden className="h-px w-5 bg-accent/60" />
