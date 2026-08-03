@@ -172,6 +172,8 @@ const messages = {
     license: "License",
     maintained: "Maintained",
     allCategories: "All",
+    emptyTitle: "No tools yet",
+    emptyDesc: "Tools are being built — check back soon.",
   },
 
   about: {

@@ -38,7 +38,10 @@ export function ToolsGrid({
         </StaggeredGrid>
       ) : (
         <div className="border border-line bg-bg2 px-6 py-16 text-center">
-          <p className="font-mono text-sm text-fg3">{t("allCategories")}</p>
+          <p className="font-mono text-sm font-bold text-fg2">
+            {t("emptyTitle")}
+          </p>
+          <p className="mt-2 font-mono text-xs text-fg3">{t("emptyDesc")}</p>
         </div>
       )}
     </>

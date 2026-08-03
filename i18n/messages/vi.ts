@@ -173,6 +173,8 @@ const messages = {
     license: "Giấy phép",
     maintained: "Đang bảo trì",
     allCategories: "Tất cả",
+    emptyTitle: "Chưa có công cụ nào",
+    emptyDesc: "Các công cụ đang được xây dựng — quay lại sau nhé.",
   },
 
   about: {
