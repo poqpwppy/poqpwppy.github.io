@@ -146,11 +146,13 @@ export default [
     "ctfYear": 2019
   },
   {
-    "title": "Old Website",
+    "title": "Old Website - BushBash CTF 2026",
     "date": "2026-08-03",
     "categories": [
       "Web Exploitation",
-      "Writeups"
+      "Writeups",
+      "Medium",
+      "BushBash CTF 2026"
     ],
     "tags": [
       "web",
@@ -158,7 +160,8 @@ export default [
       "nextjs",
       "prototype-pollution",
       "rce",
-      "medium"
+      "medium",
+      "bushbashctf2026"
     ],
     "author": "khoa",
     "description": "We found this website running using one of cybervillain Zoowee Blubberworth's old domain names. He's supposed to be in jail right now so there's really no reason why this server could be up and running. It probably hasn't been updated in a year or so. Can you hack in and have a peek around?",
@@ -177,8 +180,8 @@ export default [
     "year": 2026,
     "category": "web",
     "difficulty": "medium",
-    "ctfName": undefined,
-    "ctfYear": undefined
+    "ctfName": "BushBash CTF",
+    "ctfYear": 2026
   },
   {
     "title": "Trickster",

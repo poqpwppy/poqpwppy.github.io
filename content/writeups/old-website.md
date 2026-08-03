@@ -1,8 +1,8 @@
 ---
-title: Old Website
+title: Old Website - BushBash CTF 2026
 date: 2026-08-03 19:00:00 +0700
-categories: [Web Exploitation, Writeups]
-tags: [web, react2shell, nextjs, prototype-pollution, rce, medium]
+categories: [Web Exploitation, Writeups, Medium, BushBash CTF 2026]
+tags: [web, react2shell, nextjs, prototype-pollution, rce, medium, bushbashctf2026]
 author: khoa
 description: We found this website running using one of cybervillain Zoowee Blubberworth's old domain names. He's supposed to be in jail right now so there's really no reason why this server could be up and running. It probably hasn't been updated in a year or so. Can you hack in and have a peek around?
 toc: true
