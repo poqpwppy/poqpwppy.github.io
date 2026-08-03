@@ -59,6 +59,19 @@ function deriveDifficulty(cats: string[]): WriteupDifficulty {
   return hit ? (hit.toLowerCase() as WriteupDifficulty) : "medium";
 }
 
+/**
+ * True if the body prose is written in Vietnamese, detected by Vietnamese
+ * diacritics. Used to gate the "only available in Vietnamese" note on the EN
+ * detail page — English-authored posts (bitsctf, old-website, vsl-ctf) have
+ * ~0 diacritics while Vietnamese posts have 100+; threshold 5 is safely in
+ * between.
+ */
+const VIETNAMESE_DIACRITICS = /[ạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹđĐ]/g;
+
+function isVietnameseText(text: string): boolean {
+  return (text.match(VIETNAMESE_DIACRITICS) ?? []).length >= 5;
+}
+
 function deriveCtf(cats: string[]): { name?: string; year?: number } {
   const hit = cats.find((c) => /(ctf|pico|cybercon)/i.test(c));
   if (!hit) return {};
@@ -111,6 +124,7 @@ const writeups = defineCollection({
       toc,
       readingTime: readingTime(data.content),
       year: Number(date.slice(0, 4)),
+      isVietnamese: isVietnameseText(data.content),
       category: deriveWriteupCategory(categories),
       difficulty: deriveDifficulty(categories),
       ctfName: ctf.name,
@@ -151,6 +165,7 @@ const research = defineCollection({
       toc,
       readingTime: readingTime(data.content),
       year: Number(date.slice(0, 4)),
+      isVietnamese: isVietnameseText(data.content),
       category: deriveResearchCategory(categories),
       status: "published" as const,
       summary: data.description ?? "",

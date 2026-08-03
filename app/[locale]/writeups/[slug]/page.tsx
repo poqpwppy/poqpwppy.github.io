@@ -186,7 +186,7 @@ export default async function WriteupPage({
               </div>
             ) : null}
 
-            {locale === "en" ? (
+            {locale === "en" && writeup.isVietnamese ? (
               <p className="mt-6 max-w-2xl border-l-4 border-[#e60026] bg-[#160508] px-4 py-3 font-mono text-xs leading-relaxed text-neutral-200">
                 {common("languageNote")}
               </p>
