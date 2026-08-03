@@ -19,7 +19,7 @@ Given the challenge hint that the server hasn't been updated in over a year, our
 
 First, let's inspect the target using `curl` or Burp Suite to analyze the HTTP response headers and application technology stack.
 
-![Reconnaissance](https://i.postimg.cc/MM2Xc8mp/image-2026-08-03-185151862.png)
+![Reconnaissance](https://i.postimg.cc/Gcxj99d7/image-2026-08-03-185151862.png)
 _Initial response headers inspection_
 
 Key observations from the response:
