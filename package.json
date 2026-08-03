@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/ensure-root-page.mjs",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "node scripts/patch-next-intl.mjs"

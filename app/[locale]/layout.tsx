@@ -19,7 +19,7 @@ import { IntroLoader } from "@/components/layout/IntroLoader";
 import { CustomScrollbar } from "@/components/ui/CustomScrollbar";
 import "../globals.css";
 
-/** Prerender both locales. `vi` is served unprefixed (as-needed). */
+/** Prerender both locales. Both are always prefixed (/vi, /en) — see i18n/routing.ts. */
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

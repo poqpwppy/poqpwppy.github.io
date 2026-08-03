@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 
 type BadgeProps = {
   children: React.ReactNode;
@@ -21,9 +22,9 @@ export function Badge({ children, className, href, tone = "neutral" }: BadgeProp
   const classes = cn("chip", tones[tone], className);
   if (href) {
     return (
-      <a href={href} className={cn(classes, "transition-colors hover:border-accent/60 hover:text-fg")}>
+      <Link href={href} className={cn(classes, "transition-colors hover:border-accent/60 hover:text-fg")}>
         {children}
-      </a>
+      </Link>
     );
   }
   return <span className={classes}>{children}</span>;

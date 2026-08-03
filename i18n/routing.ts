@@ -1,11 +1,15 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  // `vi` is the primary locale served at the root path (`/`).
-  // `en` gets the `/en` prefix (`localePrefix: "as-needed"`).
+  // `output: "export"` cannot run the middleware, so next-intl can't strip the
+  // default locale's prefix at runtime — `/about` would have no file behind it
+  // (GitHub Pages would 404). Use `localePrefix: "always"` so every path is
+  // explicitly prefixed and the exported files always match the links:
+  //   /vi/... → tiếng Việt, /en/... → English.
+  // The root `/` redirects to `/vi` (see scripts/ensure-root-page.mjs).
   locales: ["vi", "en"],
   defaultLocale: "vi",
-  localePrefix: "as-needed",
+  localePrefix: "always",
 });
 
 export type Locale = (typeof routing.locales)[number];

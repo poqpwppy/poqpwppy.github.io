@@ -5,7 +5,7 @@ export const dynamic = "force-static";
 
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.github.io";
 
-/** Static routes shared by every locale (vi at root, en under /en). */
+/** Static routes shared by every locale (both locales are prefixed: /vi, /en). */
 const STATIC = [
   "",
   "/writeups",
@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of ["vi", "en"] as const) {
-    const prefix = locale === "vi" ? "" : `/${locale}`;
+    const prefix = `/${locale}`;
 
     for (const p of STATIC) {
       entries.push({
