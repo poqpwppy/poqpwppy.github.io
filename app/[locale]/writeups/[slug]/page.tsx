@@ -69,7 +69,7 @@ export default async function WriteupPage({
     .sort((a, b) => String(b.date).localeCompare(String(a.date)))
     .slice(0, 3);
 
-  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.dev";
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.github.io";
 
   return (
     <>

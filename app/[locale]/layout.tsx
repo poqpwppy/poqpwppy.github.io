@@ -34,7 +34,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.dev",
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://poqpwppy.github.io",
     ),
     title: {
       default: t("siteTitle"),
