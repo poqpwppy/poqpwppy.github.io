@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { createContext, useContext, useEffect, useState } from "react";
+import { usePathname } from "@/i18n/navigation";
 
 export type IntroStage = "loading" | "title_only" | "full";
 
@@ -16,7 +17,14 @@ export function useIntroStage() {
 const messages = ["Hello there.", "Welcome to Khoa's website.", "Enjoy."];
 
 export function IntroLoader({ children }: { children: React.ReactNode }) {
-  const [stage, setStage] = useState<IntroStage>("loading");
+  const pathname = usePathname();
+  // The intro overlay only plays on the hero (home) page. On any other route
+  // (direct load of /vi/about, /en/writeups/…, etc.) start at "full" so the
+  // loader never appears and every intro-stage consumer renders immediately.
+  const isHome = pathname === "/" || pathname === "";
+  const [stage, setStage] = useState<IntroStage>(() =>
+    isHome ? "loading" : "full",
+  );
   const [displayed, setDisplayed] = useState("");
   const [messageIndex, setMessageIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
