@@ -40,4 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# content-collections build cache (regenerated on every build)
+.content-collections/cache/
+
 poqpwppy-temp/

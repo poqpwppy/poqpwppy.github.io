@@ -151,12 +151,12 @@ export default [
     "categories": [
       "Web Exploitation",
       "PicoCTF 2024",
-      "Medium"
+      "Easy"
     ],
     "tags": [
       "web",
       "pico",
-      "easys"
+      "easy"
     ],
     "author": "khoa",
     "description": "I found a web app that can help process images, PNG images only!",
@@ -174,7 +174,7 @@ export default [
     "readingTime": 2,
     "year": 2025,
     "category": "web",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "ctfName": "PicoCTF",
     "ctfYear": 2024
   },
