@@ -5,19 +5,34 @@ import { cn } from "@/lib/utils";
 
 /**
  * Sci-Fi Cyber Red Dot Custom Cursor Component.
+ * - Desktop only: renders nothing on touch-only devices (phones, tablets).
  * - Direct zero-latency hardware tracking centered on pointer.
  * - Luminous crimson red dot with ambient glow.
  * - Expands into a glowing HUD pulse ring with inner core when hovering interactive elements.
  * - Scales down smoothly on mouse click.
  */
 export function HudCursor() {
+  const [enabled, setEnabled] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [pressed, setPressed] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const dotRef = useRef<HTMLDivElement>(null);
 
+  // Show the custom cursor only when the primary input is a fine pointer
+  // (mouse/trackpad). On touch-only devices there is no cursor to replace —
+  // the dot would otherwise trail the finger. Updates live if the pointer
+  // type changes (e.g. plugging/unplugging a mouse on a touchscreen laptop).
   useEffect(() => {
+    const mq = window.matchMedia("(pointer: fine)");
+    const apply = () => setEnabled(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
     const dot = dotRef.current;
     if (!dot) return;
 
@@ -72,7 +87,10 @@ export function HudCursor() {
       document.removeEventListener("mouseenter", onMouseEnter);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [visible]);
+  }, [enabled, visible]);
+
+  // No fine pointer (phone/tablet): drop the custom cursor entirely.
+  if (!enabled) return null;
 
   return (
     <div

@@ -1,8 +1,8 @@
 ---
 title: Trickster
 date: 2025-10-27 23:00:00 +0700
-categories: [Web Exploitation, PicoCTF 2024, Medium]
-tags: [web, pico, easys]
+categories: [Web Exploitation, PicoCTF 2024, Easy]
+tags: [web, pico, easy]
 author: khoa
 description: I found a web app that can help process images, PNG images only!
 toc: true
