@@ -16,6 +16,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Background } from "@/components/background/Background";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { IntroLoader } from "@/components/layout/IntroLoader";
+import { SkipLink } from "@/components/layout/SkipLink";
 import { CustomScrollbar } from "@/components/ui/CustomScrollbar";
 import "../globals.css";
 
@@ -73,6 +74,7 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   const messages = await getMessages();
+  const t = await getTranslations({ locale, namespace: "nav" });
 
   return (
     <html
@@ -85,13 +87,11 @@ export default async function LocaleLayout({
             <div className="flex min-h-screen flex-col justify-between">
               <ReadingProgress />
               <Background />
-              <a href="#main" className="skip-link">
-                Skip to content
-              </a>
+              <SkipLink label={t("skipToContent")} />
               <MenuButton />
               <HudCursor />
               <CustomScrollbar />
-              <main id="main" className="flex-1">
+              <main id="main" tabIndex={-1} className="flex-1">
                 {children}
               </main>
               <Footer />
