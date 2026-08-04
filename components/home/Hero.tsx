@@ -106,7 +106,11 @@ export function Hero() {
           opacity: reduce ? 1 : titleOpacity,
           scale: reduce ? 1 : titleScale,
         }}
-        className="relative z-10 flex w-full flex-1 items-center justify-center px-2 py-24"
+        className={`relative z-10 flex w-full flex-1 items-center justify-center px-2 py-24 transition-[filter] duration-1000 ${
+          stage === "title_only"
+            ? "drop-shadow-[0_0_45px_rgba(255,255,255,0.95)]"
+            : "drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+        }`}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.97, filter: "blur(6px)" }}
@@ -116,11 +120,7 @@ export function Hero() {
             filter: isTitleVisible ? "blur(0px)" : "blur(6px)",
           }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className={`w-full text-center transition-all duration-1000 ${
-            stage === "title_only"
-              ? "drop-shadow-[0_0_45px_rgba(255,255,255,0.95)]"
-              : "drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-          }`}
+          className="w-full text-center"
         >
           <RotatingTypewriter isStarted={isTitleVisible} />
         </motion.div>

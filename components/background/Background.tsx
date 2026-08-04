@@ -28,8 +28,8 @@ export function Background() {
       {/* Homepage ASCII Matrix canvas */}
       {isHome && <FluidCanvas />}
 
-      {/* Full-screen ASCII Wave background — rendered across all pages */}
-      <AsciiBackground />
+      {/* Full-screen ASCII Wave background — subpages only (home uses the Matrix canvas) */}
+      {!isHome && <AsciiBackground />}
 
       {/* Global Full-Viewport Crimson Vignette & Ambient Glow Overlay */}
       <div
